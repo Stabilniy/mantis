@@ -40,6 +40,13 @@ class ProjectHelper:
             project_list.append(Project(id=id, project_name=project_name, description=description))
         return project_list
 
+    def get_project_list_soap(self):
+        project_list_soap = []
+        l = self.app.soap.get_project_list("administrator", "root")
+        for i in l:
+            project_list_soap.append(Project(id=i.id, project_name=i.name, description=i.description))
+        return project_list_soap
+
     def delete_project_by_id(self, id):
         wd = self.app.wd
         wd.get("http://localhost/mantisbt-1.2.20/manage_proj_edit_page.php?project_id=%s"%id)

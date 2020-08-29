@@ -17,23 +17,18 @@ def load_config(file):
 @pytest.fixture
 def app(request):
     global fixture
-    #global target
     browser = request.config.getoption("--browser")
     web_config = load_config(request.config.getoption("--target"))['web']
     webadmin_config = load_config(request.config.getoption("--target"))['webadmin']
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=web_config['base_url'])
-    #fixture.session.ensure_login(username=web_config['username'], password=web_config['password'])
     fixture.session.login(username=webadmin_config['username'], password=webadmin_config['password'])
-    return fixture
-
-@pytest.fixture(scope="session", autouse=True)
-def stop(request):
     def fin():
-#        fixture.session.ensure_logout()
+        fixture.session.ensure_logout()
         fixture.destroy()
     request.addfinalizer(fin)
     return fixture
+
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="firefox")
