@@ -1,8 +1,9 @@
 from Modules.Project import Project
 
 class ProjectHelper:
-    def __init__(self, app):
+    def __init__(self, app, base_url):
         self.app = app
+        self.base_url = base_url
 
     def new_project_creation(self, project):
         wd = self.app.wd
@@ -16,7 +17,8 @@ class ProjectHelper:
 
     def project_manage_page(self):
         wd = self.app.wd
-        wd.get("http://localhost/mantisbt-1.2.20/manage_proj_page.php")
+        base_url = self.base_url
+        wd.get(base_url + "/manage_proj_page.php")
 
     def project_count(self):
         wd = self.app.wd

@@ -17,8 +17,8 @@ class Application:
             raise ValueError("Unrecognized browser %s" % browser)
         self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
-        self.project = ProjectHelper(self)
-        self.soap = SoapHelper(self)
+        self.project = ProjectHelper(self, base_url)
+        self.soap = SoapHelper(self, base_url)
         self.base_url = base_url
 
     def open_homepage(self):
